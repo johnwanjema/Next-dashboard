@@ -20,12 +20,15 @@ import { formatCurrency } from './utils';
 // Request Time Information -
 //  Dynamic rendering allows you to access information that can only be known at request time, such as cookies or the URL search parameters.
 
+// With dynamic rendering, your application is only as fast as your slowest data fetch.
+
+
 import { unstable_noStore as noStore } from 'next/cache';
 
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
-  noStore();
+  // noStore();
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
 
   try {
@@ -34,10 +37,7 @@ export async function fetchRevenue() {
 
     // console.log('Fetching revenue data...');
     // await new Promise((resolve) => setTimeout(resolve, 3000));
-
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-
-    // console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
